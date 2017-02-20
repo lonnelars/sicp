@@ -58,3 +58,31 @@
 ;; (if #t 0 (p))
 ;; 0
 
+;; 1.1.7 Newton's method
+
+(define (sqrt-iter guess x)
+  (if (improved-good-enough? guess x)
+      guess
+      (sqrt-iter (improve guess x)
+                 x)))
+
+(define (improve guess x)
+  (average guess (/ x guess)))
+
+(define (average x y)
+  (/ (+ x y) 2))
+
+(define (good-enough? guess x)
+  (< (abs (- (square guess) x)) 0.001))
+
+(define (sqrt x)
+  (sqrt-iter 1.0 x))
+
+;; Exercise 1.6
+;; new-if will always evaluate both its arguments, even if (good-enough? guess x) is true => infinite loop.
+
+;; Exercise 1.7
+
+;; will terminate because of computer's limited precision
+(define (improved-good-enough? guess x)
+  (= guess (improve guess x)))
