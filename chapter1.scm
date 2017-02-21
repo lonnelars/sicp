@@ -82,7 +82,6 @@
 ;; new-if will always evaluate both its arguments, even if (good-enough? guess x) is true => infinite loop.
 
 ;; Exercise 1.7
-
-;; will terminate because of computer's limited precision
 (define (improved-good-enough? guess x)
-  (= guess (improve guess x)))
+  (<= (abs (- guess (improve guess x)))
+      (* guess 0.001)))
