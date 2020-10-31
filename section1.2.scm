@@ -128,3 +128,39 @@
 
 (define (even? n)
   (= (remainder n 2) 0))
+
+;; Exercise 1.16
+
+(define (fast-expt-iter b n)
+  (define (loop a b n)
+    (cond ((= n 0) a)
+	  ((even? n) (loop a (square b) (/ n 2)))
+	  (else (loop (* a b) b (- n 1)))))
+  (loop 1 b n))
+
+;; Exercise 1.17
+
+(define (* a b)
+  (if (= b 0)
+      0
+      (+ a (* a (- b 1)))))
+
+(define (double a)
+  (+ a a))
+
+(define (halve a)
+  (/ a 2))
+
+(define (fast-mult a b)
+  (cond ((= b 0) 0)
+	((even? b) (double (fast-mult a (halve b))))
+	(else (+ a (fast-mult a (- b 1))))))
+
+;; Exercise 1.18
+
+(define (fast-mult-iter a b)
+  (define (loop x a b)
+    (cond ((= b 0) x)
+	  ((even? b) (loop x (double a) (halve b)))
+	  (else (loop (+ x a) a (- b 1)))))
+  (loop 0 a b))
